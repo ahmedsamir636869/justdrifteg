@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { deleteMaintenanceLog } from '@/app/actions/maintenance'
 import { Trash2 } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function DeleteMaintenanceButton({ logId, carId }: { logId: string, carId: string }) {
   const [isDeleting, setIsDeleting] = useState(false)
@@ -12,8 +13,10 @@ export default function DeleteMaintenanceButton({ logId, carId }: { logId: strin
     setIsDeleting(true)
     try {
       await deleteMaintenanceLog(logId, carId)
-    } catch (e) {
-      alert('Failed to delete log')
+      toast.success('Maintenance record deleted')
+    } catch (error) {
+      toast.error('Failed to delete log')
+    } finally {
       setIsDeleting(false)
     }
   }

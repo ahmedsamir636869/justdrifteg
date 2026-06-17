@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { toggleUserRole } from '@/app/actions/admin'
+import { toast } from 'sonner'
 
 export default function AdminRoleToggle({ userId, isOrganizer }: { userId: string, isOrganizer: boolean }) {
   const [loading, setLoading] = useState(false)
@@ -9,9 +10,14 @@ export default function AdminRoleToggle({ userId, isOrganizer }: { userId: strin
   const handleToggle = async () => {
     setLoading(true)
     try {
-      await toggleUserRole(userId, isOrganizer)
+      const result = await toggleUserRole(userId, isOrganizer)
+      if (result?.error) {
+        toast.error(result.error)
+      } else {
+        toast.success('User role updated')
+      }
     } catch (error: any) {
-      alert(error.message)
+      toast.error('An unexpected error occurred')
     } finally {
       setLoading(false)
     }
