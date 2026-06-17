@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { LogOut, Settings, LayoutDashboard, ChevronDown } from 'lucide-react'
 
 export default function UserNavDropdown({ 
@@ -32,7 +33,7 @@ export default function UserNavDropdown({
       >
         <div className="w-8 h-8 rounded-full bg-zinc-800 border border-white/10 overflow-hidden flex items-center justify-center shrink-0">
           {userProfile.avatar_url ? (
-            <img src={userProfile.avatar_url} alt={userProfile.username} className="w-full h-full object-cover" />
+            <Image src={userProfile.avatar_url} alt={userProfile.username} fill sizes="32px" className="object-cover" />
           ) : (
             <span className="text-xs font-bold text-zinc-400">{userProfile.username?.[0]?.toUpperCase()}</span>
           )}

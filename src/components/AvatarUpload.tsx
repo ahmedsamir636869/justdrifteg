@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { updateAvatarUrl } from '@/app/actions/profile'
 import { Camera, Loader2 } from 'lucide-react'
+import Image from 'next/image'
 import { toast } from 'sonner'
 
 export default function AvatarUpload({ currentUrl, username, hideText = false }: { currentUrl: string | null, username: string, hideText?: boolean }) {
@@ -51,7 +52,7 @@ export default function AvatarUpload({ currentUrl, username, hideText = false }:
       <div className="relative group">
         <div className="w-24 h-24 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700 flex items-center justify-center">
           {currentUrl ? (
-            <img src={currentUrl} alt={username} className="w-full h-full object-cover" />
+            <Image src={currentUrl} alt={username} fill sizes="96px" className="object-cover" />
           ) : (
             <span className="text-3xl font-bold text-zinc-500">{username[0]?.toUpperCase()}</span>
           )}

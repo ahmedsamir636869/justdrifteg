@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Car, MapPin, Trophy, Zap, Shield, QrCode, Play, Image as ImageIcon } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 
@@ -24,10 +25,12 @@ export default async function Index() {
 
         {/* Hero Subject Image */}
         <div className="absolute bottom-[10vh] sm:bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[100vw] h-[60vh] sm:h-[85vh] flex justify-center items-end pointer-events-none z-10 px-4 sm:px-0">
-          <img 
+          <Image 
             src="/hero1.png" 
             alt="Hero Subject" 
-            className="w-full h-full object-contain object-bottom drop-shadow-2xl mix-blend-lighten scale-100 sm:scale-[1.4] origin-bottom" 
+            fill
+            priority
+            className="object-contain object-bottom drop-shadow-2xl mix-blend-lighten scale-100 sm:scale-[1.4] origin-bottom" 
           />
           {/* Smooth bottom fade to match background */}
           <div className="absolute inset-x-0 bottom-0 h-1/2 sm:h-1/3 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
@@ -137,7 +140,7 @@ export default async function Index() {
             return (
               <Link key={car.id} href={`/cars/${car.id}`} className="group relative rounded-2xl overflow-hidden aspect-[4/3] border border-white/5 shadow-xl block">
                 {coverImg ? (
-                  <img src={coverImg.url} alt={`${car.make} ${car.model}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <Image src={coverImg.url} alt={`${car.make} ${car.model}`} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
                 ) : (
                   <div className="w-full h-full bg-zinc-900 flex items-center justify-center">
                     <ImageIcon className="w-10 h-10 text-zinc-800" />

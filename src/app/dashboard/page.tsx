@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 import AddCarForm from "@/components/AddCarForm";
 import Link from "next/link";
 import { Car, Wrench, Plus, QrCode, Settings, Image as ImageIcon } from "lucide-react";
@@ -86,7 +87,7 @@ export default async function Dashboard() {
                   <Link href={`/cars/${car.id}`} key={car.id} className="card group hover:scale-[1.02] cursor-pointer p-0 overflow-hidden flex flex-col">
                     <div className="aspect-[16/9] w-full bg-zinc-900 border-b border-white/5 flex items-center justify-center overflow-hidden relative">
                       {coverImg ? (
-                        <img src={coverImg.url} alt="Car" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <Image src={coverImg.url} alt="Car" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <ImageIcon className="w-10 h-10 text-zinc-800" />
                       )}

@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { ImagePlus, X, Star, Loader2 } from 'lucide-react'
+import Image from 'next/image'
 import { toast } from 'sonner'
 
 interface CarImage {
@@ -102,7 +103,7 @@ export default function CarImageUpload({ carId, existingImages, isOwner }: { car
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {images.map(img => (
             <div key={img.id} className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950">
-              <img src={img.url} alt="Car photo" className="w-full h-full object-cover" />
+              <Image src={img.url} alt="Car photo" fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover" />
               {img.is_primary && (
                 <div className="absolute top-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
                   <Star className="w-3 h-3" /> Cover

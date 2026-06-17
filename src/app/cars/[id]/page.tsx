@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import { Calendar, Car, Wrench, Trophy, Navigation, Camera } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import CarImageUpload from "@/components/CarImageUpload";
 import AddMaintenanceForm from "@/components/AddMaintenanceForm";
 import DeleteMaintenanceButton from "@/components/DeleteMaintenanceButton";
@@ -91,7 +92,7 @@ export default async function CarProfilePage({
       <div className="card relative overflow-hidden">
         {primaryImage && (
           <div className="w-full h-64 md:h-96 relative">
-            <img src={primaryImage.url} alt={`${car.year} ${car.make} ${car.model}`} className="w-full h-full object-cover" />
+            <Image src={primaryImage.url} alt={`${car.year} ${car.make} ${car.model}`} fill priority sizes="100vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#111113] via-transparent to-transparent"></div>
           </div>
         )}
@@ -112,7 +113,7 @@ export default async function CarProfilePage({
             <div className="flex items-center gap-4 bg-zinc-900/80 backdrop-blur-md p-3 pr-6 rounded-full border border-zinc-800">
               <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center overflow-hidden shrink-0">
                 {car.profiles?.avatar_url ? (
-                  <img src={car.profiles.avatar_url} alt={car.profiles.username} className="w-full h-full object-cover" />
+                  <Image src={car.profiles.avatar_url} alt={car.profiles.username} fill sizes="40px" className="object-cover" />
                 ) : (
                   <span className="text-sm font-bold text-zinc-400">{car.profiles?.username?.[0]?.toUpperCase()}</span>
                 )}

@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import Image from "next/image";
 import { Car, Search } from "lucide-react";
 
 export default async function ExplorePage({
@@ -54,7 +55,7 @@ export default async function ExplorePage({
               <Link href={`/cars/${car.id}`} key={car.id} className="card overflow-hidden group cursor-pointer">
                 <div className="w-full h-48 bg-zinc-900 overflow-hidden relative">
                   {coverImg ? (
-                    <img src={coverImg.url} alt={`${car.year} ${car.make} ${car.model}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <Image src={coverImg.url} alt={`${car.year} ${car.make} ${car.model}`} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-zinc-900 to-zinc-950">
                       <Car className="w-14 h-14 text-zinc-800" />

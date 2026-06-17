@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { Shield, ShieldAlert, CheckCircle2 } from "lucide-react";
 import AdminRoleToggle from "@/components/AdminRoleToggle";
+import Image from "next/image";
 
 export default async function AdminDashboard() {
   const supabase = await createClient();
@@ -64,7 +65,7 @@ export default async function AdminDashboard() {
                   <td className="px-6 py-4 font-bold text-white flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center overflow-hidden shrink-0 border border-zinc-700">
                       {profile.avatar_url ? (
-                        <img src={profile.avatar_url} alt={profile.username} className="w-full h-full object-cover" />
+                        <Image src={profile.avatar_url} alt={profile.username} fill sizes="32px" className="object-cover" />
                       ) : (
                         <span className="text-xs">{profile.username?.[0]?.toUpperCase()}</span>
                       )}
