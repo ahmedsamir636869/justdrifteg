@@ -111,7 +111,7 @@ export default async function CarProfilePage({
             </div>
             
             <div className="flex items-center gap-4 bg-zinc-900/80 backdrop-blur-md p-3 pr-6 rounded-full border border-zinc-800">
-              <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center overflow-hidden shrink-0">
+              <div className="relative w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center overflow-hidden shrink-0">
                 {car.profiles?.avatar_url ? (
                   <Image src={car.profiles.avatar_url} alt={car.profiles.username} fill sizes="40px" className="object-cover" />
                 ) : (

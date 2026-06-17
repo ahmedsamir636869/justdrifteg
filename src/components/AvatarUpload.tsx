@@ -50,7 +50,7 @@ export default function AvatarUpload({ currentUrl, username, hideText = false }:
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="relative group">
-        <div className="w-24 h-24 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700 flex items-center justify-center">
+        <div className="relative w-24 h-24 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700 flex items-center justify-center">
           {currentUrl ? (
             <Image src={currentUrl} alt={username} fill sizes="96px" className="object-cover" />
           ) : (

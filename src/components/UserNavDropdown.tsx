@@ -31,7 +31,7 @@ export default function UserNavDropdown({
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 hover:bg-white/5 p-1 pr-3 rounded-full transition-colors border border-transparent hover:border-white/10"
       >
-        <div className="w-8 h-8 rounded-full bg-zinc-800 border border-white/10 overflow-hidden flex items-center justify-center shrink-0">
+        <div className="relative w-8 h-8 rounded-full bg-zinc-800 border border-white/10 overflow-hidden flex items-center justify-center shrink-0">
           {userProfile.avatar_url ? (
             <Image src={userProfile.avatar_url} alt={userProfile.username} fill sizes="32px" className="object-cover" />
           ) : (
