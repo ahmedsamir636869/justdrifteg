@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import { Calendar, Car, Wrench, Trophy, Navigation, Camera } from "lucide-react";
+import Link from "next/link";
 import CarImageUpload from "@/components/CarImageUpload";
 import AddMaintenanceForm from "@/components/AddMaintenanceForm";
 import DeleteMaintenanceButton from "@/components/DeleteMaintenanceButton";

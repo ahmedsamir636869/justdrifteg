@@ -1,8 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import AvatarUpload from "@/components/AvatarUpload";
-import { UserCog, Save } from "lucide-react";
-import { updateProfile } from "@/app/actions/profile";
+import { UserCog } from "lucide-react";
+import UpdateUsernameForm from "@/components/UpdateUsernameForm";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -44,18 +44,8 @@ export default async function SettingsPage() {
         </div>
 
         <div className="relative z-10">
-          <form action={updateProfile} className="flex flex-col gap-4">
-            <div>
-              <label htmlFor="username" className="label">Username</label>
-              <input required name="username" id="username" defaultValue={profile.username} className="input-field" />
-            </div>
-
-            <button className="btn-primary w-full !py-3 !rounded-xl mt-4">
-              <Save className="w-4 h-4" /> Save Changes
-            </button>
-          </form>
-
-          </div>
+          <UpdateUsernameForm initialUsername={profile.username} />
+        </div>
       </div>
     </div>
   );
