@@ -5,6 +5,10 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 
 export async function toggleUserRole(userId: string, currentOrganizerStatus: boolean): Promise<{ error?: string }> {
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return { error: 'Server configuration error: SUPABASE_SERVICE_ROLE_KEY is missing.' }
+  }
+
   const supabase = await createClient()
   
   // Verify admin status
@@ -19,10 +23,6 @@ export async function toggleUserRole(userId: string, currentOrganizerStatus: boo
 
   if (!profile?.is_admin) {
     return { error: 'Unauthorized. Admin access required.' }
-  }
-
-  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    return { error: 'Server configuration error: SUPABASE_SERVICE_ROLE_KEY is missing.' }
   }
 
   // Use service role client to bypass RLS for administrative update

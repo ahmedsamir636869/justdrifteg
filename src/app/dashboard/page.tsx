@@ -15,21 +15,17 @@ export default async function Dashboard() {
     redirect("/login");
   }
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single();
-
-  const { data: cars } = await supabase
-    .from("cars")
-    .select("*, car_images(*)")
-    .eq("owner_id", user.id)
-    .order("created_at", { ascending: false });
-
-  // Compute Achievements Stats
-  const { count: checkinCount } = await supabase.from('event_attendees').select('*', { count: 'exact', head: true }).eq('user_id', user.id);
-  const { count: hostedCount } = await supabase.from('events').select('*', { count: 'exact', head: true }).eq('organizer_id', user.id);
+  const [
+    { data: profile },
+    { data: cars },
+    { count: checkinCount },
+    { count: hostedCount }
+  ] = await Promise.all([
+    supabase.from("profiles").select("*").eq("id", user.id).single(),
+    supabase.from("cars").select("*, car_images(*)").eq("owner_id", user.id).order("created_at", { ascending: false }),
+    supabase.from('event_attendees').select('*', { count: 'exact', head: true }).eq('user_id', user.id),
+    supabase.from('events').select('*', { count: 'exact', head: true }).eq('organizer_id', user.id)
+  ]);
   
   // Get all car IDs to count maintenance logs
   const carIds = cars?.map(c => c.id) || [];

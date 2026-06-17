@@ -16,48 +16,26 @@ export default async function CarProfilePage({
   const { id } = await params;
   const supabase = await createClient();
 
-  // Fetch current user
-  const { data: { user } } = await supabase.auth.getUser();
-
-  // Fetch car details with owner profile
-  const { data: car, error } = await supabase
-    .from("cars")
-    .select(`
-      *,
-      profiles:owner_id (username, avatar_url)
-    `)
-    .eq("id", id)
-    .single();
+  const [
+    { data: { user } },
+    { data: car, error },
+    { data: carImages },
+    { data: unlockedPages },
+    { data: maintenance }
+  ] = await Promise.all([
+    supabase.auth.getUser(),
+    supabase.from("cars").select(`*, profiles:owner_id (username, avatar_url)`).eq("id", id).single(),
+    supabase.from("car_images").select("*").eq("car_id", id).order("is_primary", { ascending: false }).order("created_at", { ascending: false }),
+    supabase.from("unlocked_pages").select("page_type").eq("car_id", id),
+    supabase.from("maintenance_logs").select("*").eq("car_id", id).order("date", { ascending: false }).limit(5)
+  ]);
 
   if (error || !car) {
     notFound();
   }
 
   const isOwner = user?.id === car.owner_id;
-
-  // Fetch car images
-  const { data: carImages } = await supabase
-    .from("car_images")
-    .select("*")
-    .eq("car_id", id)
-    .order("is_primary", { ascending: false })
-    .order("created_at", { ascending: false });
-
-  // Fetch unlocked pages for this car
-  const { data: unlockedPages } = await supabase
-    .from("unlocked_pages")
-    .select("page_type")
-    .eq("car_id", id);
-
   const hasEventHistory = unlockedPages?.some(p => p.page_type === 'Event History');
-
-  // Fetch basic maintenance logs (limit to 5)
-  const { data: maintenance } = await supabase
-    .from("maintenance_logs")
-    .select("*")
-    .eq("car_id", id)
-    .order("date", { ascending: false })
-    .limit(5);
 
   // Fetch event history if unlocked
   let eventHistory = null;

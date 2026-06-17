@@ -53,10 +53,12 @@ export async function deleteCar(car_id: string) {
   }
 
   // Manually delete related records to simulate ON DELETE CASCADE
-  await supabase.from('car_images').delete().eq('car_id', car_id)
-  await supabase.from('maintenance_logs').delete().eq('car_id', car_id)
-  await supabase.from('unlocked_pages').delete().eq('car_id', car_id)
-  await supabase.from('event_attendance').delete().eq('car_id', car_id)
+  await Promise.all([
+    supabase.from('car_images').delete().eq('car_id', car_id),
+    supabase.from('maintenance_logs').delete().eq('car_id', car_id),
+    supabase.from('unlocked_pages').delete().eq('car_id', car_id),
+    supabase.from('event_attendance').delete().eq('car_id', car_id)
+  ])
 
   const { error } = await supabase.from('cars').delete().eq('id', car_id)
   if (error) throw new Error(error.message)
